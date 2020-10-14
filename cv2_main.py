@@ -14,7 +14,8 @@ class video (QtWidgets.QDialog, Ui_Form):
 #        uic.loadUi('test2.ui',self)                           # ---
         self.setupUi(self)                                     # +++
 
-        self.control_bt.clicked.connect(self.start_webcam)
+        self.control_bt_start.clicked.connect(self.start_webcam)
+#        self.control_bt_stop.clicked.connect(self.start_webcam)
         self.capture.clicked.connect(self.capture_image)
         self.capture.clicked.connect(self.startUIWindow)       # - ()
 
@@ -22,17 +23,28 @@ class video (QtWidgets.QDialog, Ui_Form):
 
         self.cap = None                                        #  -capture <-> +cap
 
+        #setup timer at rate to update screen?
         self.timer = QtCore.QTimer(self, interval=5)
         self.timer.timeout.connect(self.update_frame)
         self._image_counter = 0
 
     @QtCore.pyqtSlot()
     def start_webcam(self):
+        print("starting webcam callback")
         if self.cap is None:
             self.cap = cv2.VideoCapture(0)
             self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
             self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  400)
         self.timer.start()
+
+    @QtCore.pyqtSlot()
+    def stop_webcam(self):
+        print("Stopping webcam callback")
+        #if self.cap is None:
+        #    self.cap = cv2.VideoCapture(0)
+        #    self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
+        #    self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
+        #self.timer.start()
 
     @QtCore.pyqtSlot()
     def update_frame(self):
@@ -43,7 +55,7 @@ class video (QtWidgets.QDialog, Ui_Form):
     @QtCore.pyqtSlot()
     def capture_image(self):
         flag, frame = self.cap.read()
-        path = r'D:\_Qt\Test\testtest'                         #
+        path = r'/home/pi/Documents/SportsCamera'                         #
         if flag:
             QtWidgets.QApplication.beep()
             name = "my_image.jpg"
@@ -73,7 +85,7 @@ class video (QtWidgets.QDialog, Ui_Form):
 
         self.hide()
         self.Window.show()
-
+w
     def goWindow1(self):
         self.show()
         self.Window.hide()
