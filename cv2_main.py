@@ -30,8 +30,8 @@ class video (QtWidgets.QDialog, Ui_Form):
     def start_webcam(self):
         if self.cap is None:
             self.cap = cv2.VideoCapture(0)
-            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  640)
+            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
+            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  400)
         self.timer.start()
 
     @QtCore.pyqtSlot()
