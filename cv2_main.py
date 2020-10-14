@@ -85,7 +85,7 @@ class video (QtWidgets.QDialog, Ui_Form):
 
         self.hide()
         self.Window.show()
-w
+
     def goWindow1(self):
         self.show()
         self.Window.hide()
