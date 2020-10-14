@@ -15,7 +15,7 @@ class video (QtWidgets.QDialog, Ui_Form):
         self.setupUi(self)                                     # +++
 
         self.control_bt_start.clicked.connect(self.start_webcam)
-#        self.control_bt_stop.clicked.connect(self.start_webcam)
+        self.control_bt_stop.clicked.connect(self.stop_webcam)
         self.capture.clicked.connect(self.capture_image)
         self.capture.clicked.connect(self.startUIWindow)       # - ()
 
@@ -33,8 +33,8 @@ class video (QtWidgets.QDialog, Ui_Form):
         print("starting webcam callback")
         if self.cap is None:
             self.cap = cv2.VideoCapture(0)
-            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
-            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  400)
+            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, (480/2))
+            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  (620/2))
         self.timer.start()
 
     @QtCore.pyqtSlot()
@@ -64,8 +64,8 @@ class video (QtWidgets.QDialog, Ui_Form):
 
     def displayImage(self, img, window=True):
         qformat = QtGui.QImage.Format_Indexed8
-        if len(img.shape)==3 :
-            if img.shape[2]==4:
+        if len(img.shape) == 3 :
+            if img.shape[2] == 4:
                 qformat = QtGui.QImage.Format_RGBA8888
             else:
                 qformat = QtGui.QImage.Format_RGB888
