@@ -33,18 +33,13 @@ class video (QtWidgets.QDialog, Ui_Form):
         print("starting webcam callback")
         if self.cap is None:
             self.cap = cv2.VideoCapture(0)
-            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, (480/2))
-            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  (620/2))
+            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  620)
         self.timer.start()
 
     @QtCore.pyqtSlot()
     def stop_webcam(self):
         print("Stopping webcam callback")
-        #if self.cap is None:
-        #    self.cap = cv2.VideoCapture(0)
-        #    self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
-        #    self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
-        #self.timer.start()
 
     @QtCore.pyqtSlot()
     def update_frame(self):
