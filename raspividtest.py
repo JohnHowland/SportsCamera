@@ -18,7 +18,7 @@ class RaspiVidController(threading.Thread):
         #add file path, timeout and preview to options
         self.raspividcmd += " -o"
         self.raspividcmd += " " + filePath
-        self.raspividcmd += (" -t")
+        self.raspividcmd += (" -t ")
         self.raspividcmd += str(timeout)
 
         if preview == False:
