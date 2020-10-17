@@ -4,23 +4,25 @@ import threading
 import time
 #import pygame
 
-RASPIVIDCMD = ["raspivid"]
+RASPIVIDCMD = "raspivid"
 TIMETOWAITFORABORT = 0.5
 
 #class for controlling the running and shutting down of raspivid
 class RaspiVidController(threading.Thread):
-    def __init__(self, filePath, timeout, preview, otherOptions=None):
+    def __init__(self, filePath = "000.264h", timeout = 10000, preview = True, otherOptions=None):
         threading.Thread.__init__(self)
         
         #setup the raspivid cmd
         self.raspividcmd = RASPIVIDCMD
 
         #add file path, timeout and preview to options
-        self.raspividcmd.append("-o")
-        self.raspividcmd.append(filePath)
-        self.raspividcmd.append("-t")
-        self.raspividcmd.append(str(timeout))
-        if preview == False: self.raspividcmd.append("-n")
+        self.raspividcmd += " -o"
+        self.raspividcmd += " " + filePath
+        self.raspividcmd += (" -t")
+        self.raspividcmd += str(timeout)
+
+        if preview == False:
+            self.raspividcmd += (" -n")
 
         #if there are other options, add them
         if otherOptions != None:
