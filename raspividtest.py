@@ -31,7 +31,7 @@ class RaspiVidController(threading.Thread):
         
     def run(self):
         #run raspivid
-        print("subprocess string:  " + self.raspividcmd)
+        print("subprocess string:  " + str(self.raspividcmd))
         raspivid = subprocess.Popen(self.raspividcmd)
         
         #loop until its set to stopped or it stops
