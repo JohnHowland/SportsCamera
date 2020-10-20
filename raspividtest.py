@@ -87,13 +87,13 @@ if __name__ == '__main__':
             fileName = "/home/pi/Documents/%d.h264" %vid_index
             vid_index += 1
             stop_vid()
-            break
- #           init_vid(fileName)
- #           start_vid()
+ #           break
+            init_vid(fileName)
+            start_vid()
         else:
             print "Invalid event: " + str(x)
           
 
     print "Stopping raspivid controller"
- #   stop_vid()
+    stop_vid()
     print "Done"
