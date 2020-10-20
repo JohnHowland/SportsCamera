@@ -22,7 +22,7 @@ class RaspiVidController(threading.Thread):
         self.raspividcmd += str(timeout)
 
         if preview == False:
-            self.raspividcmd += (" -n")
+            self.raspividcmd += (" -n ")
 
         #if there are other options, add them
         if otherOptions != None:
@@ -50,7 +50,7 @@ class RaspiVidController(threading.Thread):
 
 def init_vid():
     global vidcontrol
-    vidcontrol = RaspiVidController("/home/pi/test.h264", 10000, False, "-fps 25")
+    vidcontrol = RaspiVidController("/home/pi/test.h264", 10000, False, "-fps 25 ")
 
 def start_vid():
     global vidcontrol
