@@ -41,10 +41,15 @@ class RaspiVidController(threading.Thread):
         self.running = False
         
         #kill raspivid if still running
-        if raspivid.poll() == True: raspivid.terminate()
+        if raspivid.poll() == True: 
+            raspivid.terminate()
 
     def stopController(self):
         self.running = False
+        threading.Thread.__init__(self)
+        subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
+
+
 
 def init_vid(file):
     global vidcontrol
