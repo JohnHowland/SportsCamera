@@ -3,6 +3,7 @@ import subprocess
 import threading
 import time
 import string
+import time
 #import pygame
 
 RASPIVIDCMD = "raspivid"
@@ -87,6 +88,7 @@ if __name__ == '__main__':
             fileName = "/home/pi/Documents/%d.h264" %vid_index
             vid_index += 1
             stop_vid()
+            time.sleep(1.0)
  #           break
             init_vid(fileName)
             start_vid()
