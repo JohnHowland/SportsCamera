@@ -46,10 +46,6 @@ class RaspiVidController(threading.Thread):
 
     def stopController(self):
         self.running = False
-        threading.Thread.__init__(self)
-        subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
-
-
 
 def init_vid(file):
     global vidcontrol
@@ -65,6 +61,8 @@ def stop_vid():
     vidcontrol.stopController()
     #wait for the tread to finish if it hasn't already
     vidcontrol.join()
+    threading.Thread.__init__(self)
+    subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
 
 #test program
 if __name__ == '__main__':
