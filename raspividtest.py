@@ -75,7 +75,9 @@ if __name__ == '__main__':
     start_vid()
     
     while 1:
-        x = input("")
+        x = input("command: ")
+
+        print "received command: " + str(x)
 
         if x == 'exit':
             break
