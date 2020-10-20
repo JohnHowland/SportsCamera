@@ -74,13 +74,13 @@ if __name__ == '__main__':
     
     while 1:
         x = ""
-        x = input("command: ")
+        x = raw_input("command: ")
 
         print "received command: " + str(x)
 
-        if x == 'exit':
+        if x == "exit":
             break
-        elif x == 'capture':
+        elif x == "capture":
             fileName = "/home/pi/Documents/%d.h264" %vid_index
             vid_index += 1
             stop_vid()
