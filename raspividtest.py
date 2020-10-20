@@ -2,6 +2,7 @@ import os
 import subprocess
 import threading
 import time
+import string
 #import pygame
 
 RASPIVIDCMD = "raspivid"
@@ -72,6 +73,7 @@ if __name__ == '__main__':
     start_vid()
     
     while 1:
+        x = ""
         x = input("command: ")
 
         print "received command: " + str(x)
