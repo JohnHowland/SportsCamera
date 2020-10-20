@@ -48,9 +48,9 @@ class RaspiVidController(threading.Thread):
     def stopController(self):
         self.running = False
 
-def init_vid():
+def init_vid(file):
     global vidcontrol
-    vidcontrol = RaspiVidController("/home/pi/test.h264", 10000, True, "-fps 25 ")
+    vidcontrol = RaspiVidController(file, 10000, True, "-fps 25 ")
 
 def start_vid():
     global vidcontrol
@@ -66,11 +66,29 @@ def stop_vid():
 #test program
 if __name__ == '__main__':
 
-    init_vid()
+    vid_index = 0
+    fileName = "/home/pi/Documents/%d.h264" %vid_index
+    vid_index += 1
+    init_vid(fileName)
 
     print "Starting raspivid controller"
     start_vid()
-    time.sleep(5)
+    
+    while 1:
+        x = input("")
+
+        if x == 'exit':
+            break
+        elif x == 'capture':
+            fileName = "/home/pi/Documents/%d.h264" %vid_index
+            vid_index += 1
+            stop_vid()
+            init_vid(fileName)
+            start_vid()
+        else:
+            print "Invalid event: " + str(x)
+          
+
     print "Stopping raspivid controller"
     stop_vid()
     print "Done"
