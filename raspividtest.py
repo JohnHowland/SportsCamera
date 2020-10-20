@@ -61,7 +61,7 @@ def stop_vid():
     vidcontrol.stopController()
     #wait for the tread to finish if it hasn't already
     vidcontrol.join()
-    threading.Thread.__init__(self)
+    #threading.Thread.__init__()
     subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
 
 #test program
