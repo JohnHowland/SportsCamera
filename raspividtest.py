@@ -19,10 +19,10 @@ class RaspiVidController(threading.Thread):
         self.raspividcmd += " -o"
         self.raspividcmd += " " + filePath
         self.raspividcmd += (" -t ")
-        self.raspividcmd += str(timeout)
+        self.raspividcmd += str(timeout) + " "
 
         if preview == False:
-            self.raspividcmd += (" -n ")
+            self.raspividcmd += ("-n ")
 
         #if there are other options, add them
         if otherOptions != None:
