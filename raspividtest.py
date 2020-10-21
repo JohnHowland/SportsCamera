@@ -82,7 +82,7 @@ if __name__ == '__main__':
     print "folder name: %s" % folder_name
     list_file_path = folder_name+"/list.txt"
     print "list_file_path: %s" % list_file_path
-    list_fp = open(list_pile_path, "w")
+    list_fp = open(list_file_path, "w")
 
     vid_index = 0
 
