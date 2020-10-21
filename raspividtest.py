@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import threading
 import time
@@ -97,6 +98,8 @@ if __name__ == '__main__':
     
     while 1:
         x = ""
+        sys.stdin.flush()
+        sys.stdout.flush()
         x = raw_input("command: ")
 
         print "received command: " + str(x)
