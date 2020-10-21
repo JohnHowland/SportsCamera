@@ -128,7 +128,7 @@ if __name__ == '__main__':
 
     mp4_out_filepath = '"'+folder_name+'/out.mp4"'
 
-    ffmpeg_out = "ffmpeg -f concat -i " + list_file_path + " -c copy " + mp4_out_filepath
+    ffmpeg_out = 'ffmpeg -f concat -i "' + list_file_path + '" -c copy ' + mp4_out_filepath
     print ffmpeg_out
     
     sub = subprocess.Popen(ffmpeg_out, shell=True)
