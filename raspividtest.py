@@ -134,5 +134,5 @@ if __name__ == '__main__':
     sub = subprocess.Popen(ffmpeg_out, shell=True)
 
     sub.wait() 
-
+    print ffmpeg_out
     print "Now you are done!"
