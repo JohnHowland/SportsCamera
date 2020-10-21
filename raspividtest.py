@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
     vid_index = 0
 
-    list_line_out = "/%d.h264" % vid_index
+    list_line_out = "%d.h264" % vid_index
     list_fp.write("file "+list_line_out+"\n")
     fileName = folder_name + "/%d.h264" % vid_index
     vid_index += 1
@@ -109,7 +109,7 @@ if __name__ == '__main__':
         if x == "exit":
             break
         elif x == "capture":
-            list_line_out = "/%d.h264" % vid_index
+            list_line_out = "%d.h264" % vid_index
             list_fp.write("file "+list_line_out+"\n")
             fileName = folder_name + "/%d.h264" % vid_index
             vid_index += 1
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     mp4_out_filepath = '"'+folder_name+'/out.mp4"'
     
     os.chdir(folder_name)
-    ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy  + out.mp4'
+    ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
     print ffmpeg_out
     
     sub = subprocess.Popen(ffmpeg_out, shell=True)
