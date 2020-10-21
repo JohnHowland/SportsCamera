@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
     list_line_out = "/%d.h264" % vid_index
     list_fp.write("file "+list_line_out+"\n")
-    fileName = list_line_out
+    fileName = folder_name + "/%d.h264" % vid_index
     vid_index += 1
     init_vid(fileName)
 
@@ -111,7 +111,7 @@ if __name__ == '__main__':
         elif x == "capture":
             list_line_out = "/%d.h264" % vid_index
             list_fp.write("file "+list_line_out+"\n")
-            fileName = list_line_out
+            fileName = folder_name + "/%d.h264" % vid_index
             vid_index += 1
             stop_vid()
             time.sleep(1.0)
