@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
     setupFileSystem()
 
-    folder_name = ROOT_VIDEO_DIR + "/" + datetime.datetime.now()
+    folder_name = ROOT_VIDEO_DIR + "/" + str(datetime.datetime.now())
     os.mkdir(folder_name)
     print "folder name: %s" % folder_name
     list_file_path = folder_name+"/list.txt"
