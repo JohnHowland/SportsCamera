@@ -76,8 +76,10 @@ if __name__ == '__main__':
     setupFileSystem()
 
     folder_name = "/pi/home/SportsCameraVideos/%s" % datetime.datetime.now()
-    os.mkdir(foldername)
+    os.mkdir(folder_name)
+    print "folder name: %s" % folder_name
     list_file_path = folder_name+"/list.txt"
+    print "list_file_path: %s" % list_file_path
     list_fp = open(list_pile_path, "w")
 
     vid_index = 0
