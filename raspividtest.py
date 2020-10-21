@@ -88,7 +88,7 @@ if __name__ == '__main__':
     vid_index = 0
 
     list_line_out = folder_name + "/%d.h264" % vid_index
-    list_fp.write(list_line_out)
+    list_fp.write("file "+list_line_out+"\n")
     fileName = list_line_out
     vid_index += 1
     init_vid(fileName)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
             break
         elif x == "capture":
             list_line_out = folder_name + "/%d.h264" % vid_index
-            list_fp.write(list_line_out)
+            list_fp.write("file "+list_line_out+"\n")
             fileName = list_line_out
             vid_index += 1
             stop_vid()
@@ -128,8 +128,11 @@ if __name__ == '__main__':
 
     mp4_out_filepath = folder_name+"out.mp4"
 
-    ffmpeg_out = "ffmpeg -f concat -i %s -c copy %s" % list_file_path, mp4_out_filepath
+    ffmpeg_out = "ffmpeg -f concat -i " + list_file_path + " -c copy " + mp4_out_filepath
     print ffmpeg_out
     
-    subprocess.Popen(ffmpeg_out, shell=True)
+    sub = subprocess.Popen(ffmpeg_out, shell=True)
 
+    sub.wait() 
+
+    print "Now you are done!"
