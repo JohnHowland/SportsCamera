@@ -70,7 +70,7 @@ def setupFileSystem():
     print "This is where setting up the file path will go"
         
     
-ROOT_VIDEO_DIR = "/pi/home/SportsCameraVideos"
+ROOT_VIDEO_DIR = "/home/pi/SportsCameraVideos"
 
 #test program
 if __name__ == '__main__':
