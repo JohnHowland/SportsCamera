@@ -88,7 +88,7 @@ if __name__ == '__main__':
     list_fp = open(list_file_path, "w")
 
     vid_index = 0
-    s
+    
     list_line_out = "%d.h264" % vid_index
     list_fp.write("file "+list_line_out+"\n")
     fileName = folder_name + "/%d.h264" % vid_index
