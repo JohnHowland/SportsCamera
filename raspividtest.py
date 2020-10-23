@@ -68,7 +68,7 @@ def stop_vid():
     subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
 
 def setupFileSystem():
-    print "This is where setting up the file path will go"
+    print("This is where setting up the file path will go")
         
     
 ROOT_VIDEO_DIR = "/home/pi/SportsCameraVideos"
@@ -82,20 +82,20 @@ if __name__ == '__main__':
     folder_name.replace(' ', '_')
     os.mkdir(folder_name)
     
-    print "folder name: %s" % folder_name
+    print("folder name: %s" % folder_name)
     list_file_path = folder_name+"/list.txt"
-    print "list_file_path: %s" % list_file_path
+    print("list_file_path: %s" % list_file_path)
     list_fp = open(list_file_path, "w")
 
     vid_index = 0
-
+    s
     list_line_out = "%d.h264" % vid_index
     list_fp.write("file "+list_line_out+"\n")
     fileName = folder_name + "/%d.h264" % vid_index
     vid_index += 1
     init_vid(fileName)
 
-    print "Starting raspivid controller"
+    print("Starting raspivid controller")
     start_vid()
     
     while 1:
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         sys.stdout.flush()
         x = raw_input("command: ")
 
-        print "received command: " + str(x)
+        print("received command: " + str(x))
 
         if x == "exit":
             break
@@ -118,24 +118,24 @@ if __name__ == '__main__':
             init_vid(fileName)
             start_vid()
         else:
-            print "Invalid event: " + str(x)
+            print("Invalid event: " + str(x))
           
 
-    print "Stopping raspivid controller"
+    print("Stopping raspivid controller")
     stop_vid()
     list_fp.close()
-    print "Done"
+    print("Done")
 
-    print "Creating single file"
+    print("Creating single file")
 
     mp4_out_filepath = '"'+folder_name+'/out.mp4"'
     
     os.chdir(folder_name)
     ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
-    print ffmpeg_out
+    print(ffmpeg_out)
     
     sub = subprocess.Popen(ffmpeg_out, shell=True)
 
     sub.wait() 
-    print ffmpeg_out
-    print "Now you are done!"
+    print(ffmpeg_out)
+    print("Now you are done!")
