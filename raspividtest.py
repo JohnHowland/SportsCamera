@@ -102,7 +102,7 @@ if __name__ == '__main__':
         x = ""
         sys.stdin.flush()
         sys.stdout.flush()
-        x = raw_input("command: ")
+        x = input("command: ")
 
         print("received command: " + str(x))
 
