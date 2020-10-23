@@ -16,17 +16,17 @@ def get_BT_device_list():
     # iteratively check device list for BT device
     print('checking connected devices...')
     for device in devices:
-        print "1"
+        print("1")
         if device.name == TRIGGER_DEVICE: # look for trigger device
-            print "2"
+            print("2")
             print(device)
-            print "3"
+            print("3")
             device.grab() # other apps unable to receive events until device released
-            print "4"
+            print("4")
             for event in device.read_loop():
-                print "5"
+                print("5")
                 if event.type == evdev.ecodes.EV_KEY: # look for pressed key events
-                    print "6"
+                    print("6")
                     print(evdev.categorize(event))
 
 if __name__ == "__main__":
