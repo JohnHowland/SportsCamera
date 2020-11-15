@@ -19,13 +19,9 @@ def start_vid():
     vidcontrol.start()
 
 def stop_vid():
-    global vidcontrol
-    #stop the controller
-    vidcontrol.stopController()
-    #wait for the tread to finish if it hasn't already
-    vidcontrol.join()
-    #threading.Thread.__init__()
+    #Using the linux 'kill' command to kill the process that is running
     subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
+    time.sleep(1.0)
 
 def setupFileSystem():
     print("This is where setting up the file path will go")
@@ -37,6 +33,9 @@ ROOT_VIDEO_DIR = "/home/pi/SportsCameraVideos"
 if __name__ == '__main__':
     
     global button_event
+    global vidcontrol
+    global folder_name
+
     setupFileSystem()
 
     folder_name = ROOT_VIDEO_DIR + "/" + str(datetime.datetime.now())
@@ -58,8 +57,6 @@ if __name__ == '__main__':
 
     print("Starting raspivid controller")
     start_vid()
-
-
     
     while 1:
         x = ""
@@ -77,15 +74,21 @@ if __name__ == '__main__':
             fileName = folder_name + "/%d.h264" % vid_index
             vid_index += 1
             stop_vid()
-            time.sleep(1.0)
+          
             init_vid(fileName)
             start_vid()
         else:
             print("Invalid event: " + str(x))
           
-
+    
+    file_to_delete = vidcontrol.getCurrentFilepath()
     print("Stopping raspivid controller")
     stop_vid()
+
+    #global folder_name
+
+    os.remove(folder_name + "/" + file_to_delete)
+
     list_fp.close()
     print("Done")
 

@@ -5,7 +5,6 @@ import subprocess
 import threading
 import time
 import string
-import time
 import datetime 
 
 RASPIVIDCMD = "raspivid"
@@ -21,6 +20,7 @@ class RaspiVidController(threading.Thread):
 
         #add file path, timeout and preview to options
         self.raspividcmd += ' -c -s -o "' + filePath + '" -t ' + str(timeout) + " -b 3000000 "
+        self.current_video_filepath = filePath
 
         if preview == False:
             self.raspividcmd += ("-n ")
@@ -49,3 +49,7 @@ class RaspiVidController(threading.Thread):
 
     def stopController(self):
         self.running = False
+
+    def getCurrentFilepath(self):
+        print("Returning current video filepath: " + self.current_video_filepath)
+        return self.current_video_filepath
