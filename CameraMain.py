@@ -85,9 +85,7 @@ if __name__ == '__main__':
     print("Stopping raspivid controller")
     stop_vid()
 
-    #global folder_name
-
-    os.remove(folder_name + "/" + file_to_delete)
+    os.remove(file_to_delete)
 
     list_fp.close()
     print("Done")
