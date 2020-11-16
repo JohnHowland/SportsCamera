@@ -63,6 +63,7 @@ if __name__ == '__main__':
                 standbyUntilInput = False
 
             elif x == "quit":
+                useCamera = False
                 exitProgram = True
                 break
 
@@ -70,7 +71,7 @@ if __name__ == '__main__':
                 if int(x) > 0 and int(x) < 30:
                     print("Updating clip length")
                     clipLength = int(x)
-                    break
+             
                 else:
                     print("Cannot update to requested clip lendth. must be in between 1 and 30 seconds")
                 
