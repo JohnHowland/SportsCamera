@@ -106,7 +106,7 @@ if __name__ == '__main__':
                 list_fp.write("file "+list_line_out+"\n")
                 fileName = folder_name + "/%d.h264" % vid_index
                 vid_index += 1
-                cam_ctl.killCameraProcess()
+                vidcontrol.killCameraProcess()
           
                 init_vid(fileName)
                 start_vid()
@@ -116,7 +116,7 @@ if __name__ == '__main__':
         if exitProgram is False:
             file_to_delete = vidcontrol.getCurrentFilepath()
             print("Stopping raspivid controller")
-            cam_ctl.killCameraProcess()
+            vidcontrol.killCameraProcess()
             #os.remove(file_to_delete)
 
             list_fp.close()
