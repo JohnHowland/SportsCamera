@@ -108,7 +108,7 @@ if __name__ == '__main__':
                 vid_index += 1
                 vidcontrol.killCameraProcess()
           
-                init_vid(fileName)
+                init_vid(fileName, clipLength, False)
                 start_vid()
             else:
                 print("Invalid input: " + str(x))
