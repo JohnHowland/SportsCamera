@@ -10,9 +10,9 @@ import datetime
 #import pygame
 import camera_control as cam_ctl
 
-def init_vid(file):
+def init_vid(file, cliptime, preview):
     global vidcontrol
-    vidcontrol = cam_ctl.RaspiVidController(file, 10000, True, "-fps 25 ")
+    vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
 
 def start_vid():
     global vidcontrol
