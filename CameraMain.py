@@ -18,17 +18,11 @@ def start_vid():
     global vidcontrol
     vidcontrol.start()
 
-def stop_vid():
-    #Using the linux 'kill' command to kill the process that is running
-    subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
-    time.sleep(1.0)
-
 def setupFileSystem():
-    print("This is where setting up the file path will go")
-        
+    folder_name = ROOT_VIDEO_DIR + "/" + str(datetime.datetime.now())
+    folder_name.replace(' ', '_')
+    os.mkdir(folder_name)
     
-ROOT_VIDEO_DIR = "/home/pi/SportsCameraVideos"
-
 #test program
 if __name__ == '__main__':
     
@@ -37,10 +31,6 @@ if __name__ == '__main__':
     global folder_name
 
     setupFileSystem()
-
-    folder_name = ROOT_VIDEO_DIR + "/" + str(datetime.datetime.now())
-    folder_name.replace(' ', '_')
-    os.mkdir(folder_name)
     
     print("folder name: %s" % folder_name)
     list_file_path = folder_name+"/list.txt"
@@ -53,53 +43,93 @@ if __name__ == '__main__':
     list_fp.write("file "+list_line_out+"\n")
     fileName = folder_name + "/%d.h264" % vid_index
     vid_index += 1
-    init_vid(fileName)
 
-    print("Starting raspivid controller")
-    start_vid()
-    
-    while 1:
-        x = ""
-        sys.stdin.flush()
-        sys.stdout.flush()
-        x = input("command: ")
+    #Loop to wait for start command
+    exitProgram = False
+    clipLength = 10000
+    while exitProgram is False:
+        standbyUntilInput = True
+        while standbyUntilInput is True:
+            x = ""
+            sys.stdin.flush()
+            sys.stdout.flush()
+            x = input("command (<start> <quit> <clip length in seconds>): ")
+            print("Received command in standbyUntilInput loop: " + str(x))
 
-        print("received command: " + str(x))
+            if x == "start":
+                useCamera = True
+                standbyUntilInput = False
 
-        if x == "exit":
-            break
-        elif x == "capture":
-            list_line_out = "%d.h264" % vid_index
-            list_fp.write("file "+list_line_out+"\n")
-            fileName = folder_name + "/%d.h264" % vid_index
-            vid_index += 1
-            stop_vid()
-          
-            init_vid(fileName)
+            elif x == "quit":
+                exitProgram = True
+                break
+
+            elif x.isnumeric():
+                if int(x) > 0 and int(x) < 30:
+                    print("Updating clip length")
+                    clipLength = int(x)
+                    break
+                else:
+                    print("Cannot update to requested clip lendth. must be in between 1 and 30 seconds")
+                
+            else:
+                print("Invalid input: " + str(x))
+
+        
+        if useCamera is True:
+            init_vid(fileName, clipLength, False)
+
+            print("Starting raspivid controller")
             start_vid()
-        else:
-            print("Invalid event: " + str(x))
+        
+        while useCamera is True:
+            x = ""
+            sys.stdin.flush()
+            sys.stdout.flush()
+            x = input("command (<capture> <stop> <quit>): ")
+
+            print("Received command in useCamera loop: " + str(x))
+
+            if x == "quit":
+                exitProgram = True
+                break
+
+            elif x == "stop":
+                useCamera = False
+                pass
+
+            elif x == "capture":
+                list_line_out = "%d.h264" % vid_index
+                list_fp.write("file "+list_line_out+"\n")
+                fileName = folder_name + "/%d.h264" % vid_index
+                vid_index += 1
+                cam_ctl.killCameraProcess()
           
+                init_vid(fileName)
+                start_vid()
+            else:
+                print("Invalid input: " + str(x))
+          
+        if exitProgram is False:
+            file_to_delete = vidcontrol.getCurrentFilepath()
+            print("Stopping raspivid controller")
+            cam_ctl.killCameraProcess()
+            #os.remove(file_to_delete)
+
+            list_fp.close()
+            print("Done")
+
+            print("Creating single file")
+
+            mp4_out_filepath = '"'+folder_name+'/out.mp4"'
     
-    file_to_delete = vidcontrol.getCurrentFilepath()
-    print("Stopping raspivid controller")
-    stop_vid()
-
-    os.remove(file_to_delete)
-
-    list_fp.close()
-    print("Done")
-
-    print("Creating single file")
-
-    mp4_out_filepath = '"'+folder_name+'/out.mp4"'
+            os.chdir(folder_name)
+            ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
+            print(ffmpeg_out)
     
-    os.chdir(folder_name)
-    ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
-    print(ffmpeg_out)
-    
-    sub = subprocess.Popen(ffmpeg_out, shell=True)
+            sub = subprocess.Popen(ffmpeg_out, shell=True)
 
-    sub.wait() 
-    print(ffmpeg_out)
+            sub.wait() 
+            print(ffmpeg_out)
+
     print("Now you are done!")

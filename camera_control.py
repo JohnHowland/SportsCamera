@@ -53,3 +53,8 @@ class RaspiVidController(threading.Thread):
     def getCurrentFilepath(self):
         print("Returning current video filepath: " + self.current_video_filepath)
         return self.current_video_filepath
+
+    def killCameraProcess(self):
+        #Using the linux 'kill' command to kill the process that is running
+        subprocess.Popen("kill -USR1 `pidof raspivid`", shell=True)
+        time.sleep(1.0)
