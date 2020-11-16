@@ -23,6 +23,7 @@ def setupFileSystem():
     folder_name.replace(' ', '_')
     os.mkdir(folder_name)
     
+ROOT_VIDEO_DIR = "/home/pi/SportsCameraVideos"
 #test program
 if __name__ == '__main__':
     
