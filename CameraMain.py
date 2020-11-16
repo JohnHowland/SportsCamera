@@ -22,6 +22,7 @@ def setupFileSystem():
     folder_name = ROOT_VIDEO_DIR + "/" + str(datetime.datetime.now())
     folder_name.replace(' ', '_')
     os.mkdir(folder_name)
+    return folder_name
     
 ROOT_VIDEO_DIR = "/home/pi/SportsCameraVideos"
 #test program
@@ -31,7 +32,7 @@ if __name__ == '__main__':
     global vidcontrol
     global folder_name
 
-    setupFileSystem()
+    folder_name = setupFileSystem()
     
     print("folder name: %s" % folder_name)
     list_file_path = folder_name+"/list.txt"
