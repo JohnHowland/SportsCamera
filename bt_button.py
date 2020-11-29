@@ -52,4 +52,6 @@ def get_BT_device_list():
                     print(evdev.categorize(event))
 
 if __name__ == "__main__":
-    get_BT_device_list()
+    bt = shutterButton()
+    bt.scan_for_devices()
+    #get_BT_device_list()
