@@ -13,23 +13,20 @@ class button:
         currentState = GPIO.input(self.pinNumber)
         print("current state: " + str(currentState))
 
-        if currentState == GPIO.LOW and self.highCount > 10:
-            return 1
-        else:
-            return 0
-
         if currentState == GPIO.HIGH:
             print("registered push")
             self.highCount += 1
+            low = False
         else:
-            self.highCount = 0
-
+            low = True
         
+        if currentState == GPIO.LOW and self.highCount > 10:
+            return 1
+        else:
+            if low == True:
+                self.highCount = 0
+            return 0
 
-
-
-
-    
 
 if __name__ == '__main__':
 
