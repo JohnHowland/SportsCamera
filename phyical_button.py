@@ -11,7 +11,7 @@ class button:
 
     def buttonIn(self):
         currentState = GPIO.input(self.pinNumber)
-        print("current state: " + str(currentState))
+#        print("current state: " + str(currentState))
 
         if currentState == GPIO.HIGH:
             print("registered push")
