@@ -24,7 +24,7 @@ class button:
             self.lowCount = 0
             return 1
         else:
-            if low == True:
+            if currentState == GPIO.LOW:
                 self.highCount = 0
             return 0
 
