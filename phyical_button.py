@@ -7,9 +7,11 @@ class button:
         self.pinNumber = pinNumber
         self.highCount = 0
         self.previous = 0
+        print("Init button: " + pinNumber)
 
     def buttonIn(self):
         currentState = GPIO.input(self.pinNumber)
+        print("current state: " + str(currentState))
 
         if currentState == GPIO.LOW and self.highCount > 10:
             return 1
