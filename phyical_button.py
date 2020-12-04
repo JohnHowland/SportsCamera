@@ -1,6 +1,8 @@
 import string
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 
+MAX_DEBOUNCE_NUMBER = 15
+
 class button:
     def __init__(self, pinNumber):
         GPIO.setup(pinNumber, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -12,7 +14,7 @@ class button:
     def buttonIn(self):
         currentState = GPIO.input(self.pinNumber)
 
-        if currentState == GPIO.LOW and self.highCount > 10 and self.lowCount == 0:
+        if currentState == GPIO.LOW and self.highCount > MAX_DEBOUNCE_NUMBER and self.lowCount == 0:
             self.lowCount = 0
             ret = 1
         else:
