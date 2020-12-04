@@ -6,10 +6,11 @@ if __name__ == '__main__':
     GPIO.setwarnings(False) # Ignore warning for now
     GPIO.setmode(GPIO.BOARD)
 
-    GPIO.setup(7,GPIO.OUT)
-    print("LED on")
-    GPIO.output(7,GPIO.HIGH)
-    time.sleep(10)
-    print("LED off")
-    GPIO.output(7,GPIO.LOW)
+    while True:
+        GPIO.setup(7,GPIO.OUT)
+        print("LED on")
+        GPIO.output(7,GPIO.HIGH)
+        time.sleep(10)
+        print("LED off")
+        GPIO.output(7,GPIO.LOW)
 
