@@ -11,15 +11,18 @@ class button:
     def buttonIn(self):
         currentState = GPIO.input(self.pinNumber)
 
-        if currentState == GPIO.HIGH:
-            self.highCount += 1
-        else:
-            self.highCount = 0
-
         if currentState == GPIO.LOW and self.highCount > 10:
             return 1
         else:
             return 0
+
+        if currentState == GPIO.HIGH:
+            print("registered push")
+            self.highCount += 1
+        else:
+            self.highCount = 0
+
+        
 
 
 
