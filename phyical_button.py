@@ -6,21 +6,22 @@ class button:
         GPIO.setup(pinNumber, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         self.pinNumber = pinNumber
         self.highCount = 0
-        self.previous = 0
+        self.lowCount = 0
         print("Init button: " + str(pinNumber))
 
     def buttonIn(self):
         currentState = GPIO.input(self.pinNumber)
-#        print("current state: " + str(currentState))
 
         if currentState == GPIO.HIGH:
-            print("registered push")
+#            print("registered push")
             self.highCount += 1
-            low = False
+            self.lowCount = 0
         else:
-            low = True
+            self.lowCount += 1
+            self.highCount = 0
         
-        if currentState == GPIO.LOW and self.highCount > 10:
+        if currentState == GPIO.LOW and self.highCount > 10 and self.lowCount == 1:
+            self.lowCount = 0
             return 1
         else:
             if low == True:
