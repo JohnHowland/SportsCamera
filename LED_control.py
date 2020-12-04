@@ -10,7 +10,8 @@ if __name__ == '__main__':
         GPIO.setup(7,GPIO.OUT)
         print("LED on")
         GPIO.output(7,GPIO.HIGH)
-        time.sleep(10)
+        time.sleep(2)
         print("LED off")
         GPIO.output(7,GPIO.LOW)
+        time.sleep(2)
 
