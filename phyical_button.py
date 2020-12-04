@@ -1,8 +1,8 @@
 import string
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 
-class button(pinNumber):
-    def __init__(self):
+class button:
+    def __init__(self, pinNumber):
         GPIO.setup(pinNumber, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         self.pinNumber = pinNumber
         self.highCount = 0
@@ -36,9 +36,9 @@ if __name__ == '__main__':
 #    GPIO.setup(32, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     button16 = button(16)
-    button18 = button(16)
-    button22 = button(16)
-    button32 = button(16)
+    button18 = button(18)
+    button22 = button(22)
+    button32 = button(32)
 
 
     while True: # Run forever
