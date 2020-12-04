@@ -7,7 +7,7 @@ class button:
         self.pinNumber = pinNumber
         self.highCount = 0
         self.previous = 0
-        print("Init button: " + pinNumber)
+        print("Init button: " + str(pinNumber))
 
     def buttonIn(self):
         currentState = GPIO.input(self.pinNumber)
