@@ -1,7 +1,7 @@
 import string
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 
-class button:
+#class button:
     
 
 if __name__ == '__main__':
