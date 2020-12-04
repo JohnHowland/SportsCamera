@@ -12,7 +12,7 @@ class button:
     def buttonIn(self):
         currentState = GPIO.input(self.pinNumber)
 
-        if currentState == GPIO.LOW and self.highCount > 10 and self.lowCount == 1:
+        if currentState == GPIO.LOW and self.highCount > 10 and self.lowCount == 0:
             self.lowCount = 0
             ret = 1
         else:
