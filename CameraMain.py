@@ -2,14 +2,9 @@ import os
 import sys
 import subprocess
 import threading
-import time
 import string
-import time
-import datetime 
-#import bt_button
-#import pygame
-import camera_control as cam_ctl
 
+import peripherals.camera_control as cam_ctl
 import peripherals.FileStructure as CamFile
 
 
