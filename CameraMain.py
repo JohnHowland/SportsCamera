@@ -10,8 +10,9 @@ import datetime
 #import pygame
 import camera_control as cam_ctl
 
-#from peripherals import *
 import peripherals.FileStructure as CamFile
+
+
 
 def init_vid(file, cliptime, preview):
     global vidcontrol
@@ -21,13 +22,6 @@ def start_vid():
     global vidcontrol
     vidcontrol.start()
 
-def setupFileSystem():
-    folder_name = ROOT_VIDEO_DIR + "/" + str(datetime.datetime.now())
-    folder_name.replace(' ', '_')
-    os.mkdir(folder_name)
-    return folder_name
-    
-
 #test program
 
 if __name__ == '__main__':
@@ -35,8 +29,10 @@ if __name__ == '__main__':
     global button_event
     global vidcontrol
     global folder_name
+    
+    camera_file = CamFile.CameraFileSystem()
 
-    folder_name = setupFileSystem()
+    folder_name = camera_file.initialSetup()
     
     print("folder name: %s" % folder_name)
     list_file_path = folder_name+"/list.txt"
