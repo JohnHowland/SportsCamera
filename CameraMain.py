@@ -6,6 +6,8 @@ import string
 
 import peripherals.camera_control as cam_ctl
 import peripherals.FileStructure as CamFile
+import peripherals.LED_control as led_control
+import peripherals.phyical_button as button_control
 
 
 
@@ -44,36 +46,35 @@ if __name__ == '__main__':
     #Loop to wait for start command
     exitProgram = False
     clipLength = 10000
+
+    startStopButton = button_control.button(16)
+    clipLengthButton = button_control.button(18)
+    captureButton = button_control.button(22)
+
+
     while exitProgram is False:
         standbyUntilInput = True
+        i = 0
+        clipLengthArray = [5,10,15]
         while standbyUntilInput is True:
-            x = ""
-            sys.stdin.flush()
-            sys.stdout.flush()
-            x = input("command (<start> <quit> <clip length in seconds>): ")
-            print("Received command in standbyUntilInput loop: " + str(x))
-
-            if x == "start":
+            
+            if startStopButton.buttonIn() == 1:
                 useCamera = True
                 standbyUntilInput = False
 
-            elif x == "quit":
+            elif captureButton.buttonIn() == 1:
                 useCamera = False
                 exitProgram = True
                 break
 
-            elif x.isnumeric():
-                if int(x) > 0 and int(x) < 30:
-                    print("Updating clip length")
-                    clipLength = int(x)
-             
-                else:
-                    print("Cannot update to requested clip lendth. must be in between 1 and 30 seconds")
-                
-            else:
-                print("Invalid input: " + str(x))
+            elif clipLengthButton.buttonIn() == 1:
+                clipLength = clipLengthArray[i]
+                i += 1
+                print("Clip length updated to: " + str(clipLength))
 
-        
+                if i > 2:
+                    i = 0
+            
         if useCamera is True:
             init_vid(fileName, clipLength, False)
 

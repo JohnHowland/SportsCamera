@@ -16,6 +16,7 @@ class button:
 
         if currentState == GPIO.LOW and self.highCount > MAX_DEBOUNCE_NUMBER and self.lowCount == 0:
             self.lowCount = 0
+            print("Button " + str(self.pinNumber) + " pressed.")
             ret = 1
         else:
             if currentState == GPIO.LOW:
