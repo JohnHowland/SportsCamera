@@ -1,8 +1,23 @@
-import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
-import phyical_button as button
-import time
+import RPi.GPIO as GPIO     #Import Raspberry Pi GPIO library
+
+class LED():
+    def __init__(self, pinNumber):
+        self.pinNumber = pinNumber
+        GPIO.setup(pinNumber, GPIO.OUT)
+
+    def setLED_on(self):
+        GPIO.output(self.pinNumber, GPIO.HIGH)
+
+    def setLED_off(self):
+        GPIO.output(self.pinNumber, GPIO.LOW)
+
+
+
 
 if __name__ == '__main__':
+    import phyical_button as button
+    import time
+
     GPIO.setwarnings(False) # Ignore warning for now
     GPIO.setmode(GPIO.BOARD)
 
