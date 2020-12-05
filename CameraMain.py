@@ -10,6 +10,9 @@ import datetime
 #import pygame
 import camera_control as cam_ctl
 
+#from peripherals import *
+import peripherals.FileStructure as CamFile
+
 def init_vid(file, cliptime, preview):
     global vidcontrol
     vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
@@ -24,8 +27,9 @@ def setupFileSystem():
     os.mkdir(folder_name)
     return folder_name
     
-ROOT_VIDEO_DIR = "/home/pi/SportsCameraVideos"
+
 #test program
+
 if __name__ == '__main__':
     
     global button_event
