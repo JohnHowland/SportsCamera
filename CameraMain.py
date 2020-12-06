@@ -86,8 +86,7 @@ if __name__ == '__main__':
                     fiveSecondLED.setLED_on()
                     tenSecondLED.setLED_off()
                     fifteenSecondLED.setLED_off()
-                    pass
-                elif 1 == 1:
+                elif i == 1:
                     fiveSecondLED.setLED_off()
                     tenSecondLED.setLED_on()
                     fifteenSecondLED.setLED_off()
