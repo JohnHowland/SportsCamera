@@ -63,6 +63,7 @@ if __name__ == '__main__':
         standbyUntilInput = True
         i = 0
         clipLengthArray = [5,10,15]
+        clipLength = 15*1000
         while standbyUntilInput is True:
             
             if startStopButton.buttonIn() == 1:
@@ -75,7 +76,7 @@ if __name__ == '__main__':
                 break
 
             elif clipLengthButton.buttonIn() == 1:
-                clipLength = clipLengthArray[i]
+                clipLength = clipLengthArray[i] * 1000
                 i += 1
                 print("Clip length updated to: " + str(clipLength))
 
