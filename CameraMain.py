@@ -55,6 +55,10 @@ if __name__ == '__main__':
     clipLengthButton = button_control.button(18)
     captureButton = button_control.button(22)
 
+    fiveSecondLED = led_control.LED(7)
+    tenSecondLED = led_control.LED(11)
+    fifteenSecondLED = led_control.LED(13)
+
     print("Start/Stop Button: 16")
     print("Clip Length select button: 18")
     print("Capture button: 22")
@@ -77,6 +81,21 @@ if __name__ == '__main__':
 
             elif clipLengthButton.buttonIn() == 1:
                 clipLength = clipLengthArray[i] * 1000
+
+                if i == 0:
+                    fiveSecondLED.setLED_on()
+                    tenSecondLED.setLED_off()
+                    fifteenSecondLED.setLED_off()
+                    pass
+                elif 1 == 1:
+                    fiveSecondLED.setLED_off()
+                    tenSecondLED.setLED_on()
+                    fifteenSecondLED.setLED_off()
+                elif i == 2:
+                    fiveSecondLED.setLED_off()
+                    tenSecondLED.setLED_off()
+                    fifteenSecondLED.setLED_on()
+
                 i += 1
                 print("Clip length updated to: " + str(clipLength))
 
@@ -90,22 +109,16 @@ if __name__ == '__main__':
             start_vid()
         
         while useCamera is True:
-            x = ""
-            sys.stdin.flush()
-            sys.stdout.flush()
-            x = input("command (<capture> <stop> <quit>): ")
-
-            print("Received command in useCamera loop: " + str(x))
-
-            if x == "quit":
+            
+            if clipLengthButton.buttonIn() == 1:
                 exitProgram = True
                 break
 
-            elif x == "stop":
+            elif startStopButton.buttonIn() == 1:
                 useCamera = False
                 pass
 
-            elif x == "capture":
+            elif captureButton.buttonIn() == 1:
                 list_line_out = "%d.h264" % vid_index
                 list_fp.write("file "+list_line_out+"\n")
                 fileName = folder_name + "/%d.h264" % vid_index
@@ -114,8 +127,6 @@ if __name__ == '__main__':
           
                 init_vid(fileName, clipLength, False)
                 start_vid()
-            else:
-                print("Invalid input: " + str(x))
           
         if exitProgram is False:
             file_to_delete = vidcontrol.getCurrentFilepath()
