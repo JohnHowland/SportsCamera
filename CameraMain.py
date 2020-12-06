@@ -55,6 +55,9 @@ if __name__ == '__main__':
     clipLengthButton = button_control.button(18)
     captureButton = button_control.button(22)
 
+    print("Start/Stop Button: 16")
+    print("Clip Length select button: 18")
+    print("Capture button: 22")
 
     while exitProgram is False:
         standbyUntilInput = True
