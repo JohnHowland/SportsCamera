@@ -3,6 +3,7 @@ import sys
 import subprocess
 import threading
 import string
+import RPi.GPIO as GPIO
 
 import peripherals.camera_control as cam_ctl
 import peripherals.FileStructure as CamFile
@@ -26,6 +27,9 @@ if __name__ == '__main__':
     global button_event
     global vidcontrol
     global folder_name
+
+    GPIO.setwarnings(False) # Ignore warning for now
+    GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
     
     camera_file = CamFile.CameraFileSystem()
 
