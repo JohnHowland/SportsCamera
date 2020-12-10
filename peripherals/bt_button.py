@@ -8,13 +8,15 @@ class shutterButton():
     def __init__(self, trigger_device_name):
         #self.trigger_device = 'AB Shutter3' trigger_device_name
         self.trigger_device = trigger_device_name
+        print("init")
 
     def scan_for_devices(self):
+        print("scan")
         self.devices = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
 #        print("Number of devices found: " + str(len(self.devices)))
 
     def connect_to_button(self):
-        print("Here")
+        print("connect")
         for device in self.devices:
             print("device.name: ", device.name)
             if device.name == self.trigger_device: # look for trigger device
@@ -24,6 +26,7 @@ class shutterButton():
                 return
 
     def get_events(self):
+        print("events")
         while 1:
             for event in self.button_device.read_loop():
                 print(str(event))
