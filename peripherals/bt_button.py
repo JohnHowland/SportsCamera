@@ -67,7 +67,7 @@ if __name__ == "__main__":
     bt = shutterButton("Xenvo Shutterbug   Keyboard")
     bt.scan_for_devices()
     bt.connect_to_button()
-    bt.get_events
+    bt.get_events()
     #get_BT_device_list()
 
     #serverMACAddress = '00:1f:e1:dd:08:3d'
