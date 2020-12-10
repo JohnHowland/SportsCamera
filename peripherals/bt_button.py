@@ -26,8 +26,6 @@ class shutterButton():
             if event.type == evdev.ecodes.EV_KEY and event.value == 00: # look for pressed key events
                 global button_event
                 button_event = 1
-        
-
 
 
 def get_BT_device_list():
