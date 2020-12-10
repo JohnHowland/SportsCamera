@@ -18,14 +18,21 @@ class shutterButton():
             print("device.name: ", device.name)
             if device.name == self.trigger_device: # look for trigger device
                 print(device)
-                device.grab() # other apps unable to receive events until device released     
+                self.button_device = device
+                button_device.grab() # other apps unable to receive events until device released     
                 return
 
     def get_events(self):
-        for event in device.read_loop():
-            if event.type == evdev.ecodes.EV_KEY and event.value == 00: # look for pressed key events
-                global button_event
-                button_event = 1
+        while 1:
+            for event in self.button_device.read_loop():
+                print(str(event))
+       
+           
+            
+#            for event in device.read_loop():
+#            if event.type == evdev.ecodes.EV_KEY and event.value == 00: # look for pressed key events
+#                global button_event
+#                button_event = 1
 
 
 #def get_BT_device_list():
@@ -55,6 +62,8 @@ class shutterButton():
 if __name__ == "__main__":
     bt = shutterButton("Xenvo Shutterbug")
     bt.scan_for_devices()
+    bt.connect_to_button()
+    bt.get_events
     #get_BT_device_list()
 
     #serverMACAddress = '00:1f:e1:dd:08:3d'
