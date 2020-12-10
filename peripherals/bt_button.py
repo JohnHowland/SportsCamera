@@ -63,7 +63,7 @@ class shutterButton():
 #                    print(evdev.categorize(event))
 
 if __name__ == "__main__":
-    bt = shutterButton("Xenvo Shutterbug ")
+    bt = shutterButton("Xenvo Shutterbug   Consumer Control")
     bt.scan_for_devices()
     bt.connect_to_button()
     bt.get_events()
