@@ -5,8 +5,9 @@ import evdev
 import socket
 
 class shutterButton():
-    def __init__(self):
-        self.trigger_device = 'AB Shutter3'
+    def __init__(self, trigger_device_name):
+        #self.trigger_device = 'AB Shutter3' trigger_device_name
+        self.trigger_device = trigger_device_name
 
     def scan_for_devices(self):
         self.devices = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
@@ -14,9 +15,10 @@ class shutterButton():
 
     def connect_to_button(self):
         for device in self.devices:
-            if self.device.name == TRIGGER_DEVICE: # look for trigger device
-                print(self.device)
-                self.device.grab() # other apps unable to receive events until device released     
+            print("device.name: ", device.name)
+            if device.name == self.trigger_device: # look for trigger device
+                print(device)
+                device.grab() # other apps unable to receive events until device released     
                 return
 
     def get_events(self):
@@ -39,7 +41,7 @@ def get_BT_device_list():
     # iteratively check device list for BT device
     print('checking connected devices...')
     for device in devices:
-#        print("1")
+#        print("device.name: ", device.name)
         if device.name == TRIGGER_DEVICE: # look for trigger device
 #            print("2")
             print(device)
@@ -53,18 +55,18 @@ def get_BT_device_list():
                     print(evdev.categorize(event))
 
 if __name__ == "__main__":
-    #bt = shutterButton()
-    #bt.scan_for_devices()
+    bt = shutterButton('Xenvo Shutterbug')
+    bt.scan_for_devices()
     #get_BT_device_list()
 
-    serverMACAddress = '00:1f:e1:dd:08:3d'
-    port = 3
+    #serverMACAddress = '00:1f:e1:dd:08:3d'
+    #port = 3
     #s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
-    s = socket.socket(socket.AF_BLUETOOTH, socket.AF_PACKET, socket.)
-    s.connect((serverMACAddress,port))
-    while 1:
-        text = input()
-        if text == "quit":
-            break
-        s.send(bytes(text, 'UTF-8'))
-    s.close()
+    #s = socket.socket(socket.AF_BLUETOOTH, socket.AF_PACKET, socket.)
+    #s.connect((serverMACAddress,port))
+    #while 1:
+    #    text = input()
+    #    if text == "quit":
+    #        break
+    #    s.send(bytes(text, 'UTF-8'))
+    #s.close()

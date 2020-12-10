@@ -59,6 +59,10 @@ if __name__ == '__main__':
     tenSecondLED = led_control.LED(11)
     fifteenSecondLED = led_control.LED(13)
 
+    fiveSecondLED.setLED_off()
+    tenSecondLED.setLED_off()
+    fifteenSecondLED.setLED_off()
+
     print("Start/Stop Button: 16")
     print("Clip Length select button: 18")
     print("Capture button: 22")
@@ -150,3 +154,7 @@ if __name__ == '__main__':
             print(ffmpeg_out)
 
     print("Now you are done!")
+
+    fiveSecondLED.setLED_off()
+    tenSecondLED.setLED_off()
+    fifteenSecondLED.setLED_off()
