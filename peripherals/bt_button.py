@@ -17,11 +17,10 @@ class shutterButton():
 
     def connect_to_button(self):
         print("connect")
-        print(str(self.devices))
         for device in self.devices:
             print("device.name: ", str(device.name))
             if device.name == self.trigger_device: # look for trigger device
-                print(device)
+                print("matched")
                 self.button_device = device
                 button_device.grab() # other apps unable to receive events until device released     
                 return
