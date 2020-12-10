@@ -11,9 +11,10 @@ class shutterButton():
 
     def scan_for_devices(self):
         self.devices = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
-        print("Number of devices found: " + str(len(self.devices)))
+#        print("Number of devices found: " + str(len(self.devices)))
 
     def connect_to_button(self):
+        print("Here")
         for device in self.devices:
             print("device.name: ", device.name)
             if device.name == self.trigger_device: # look for trigger device
