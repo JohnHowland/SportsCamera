@@ -27,9 +27,8 @@ class shutterButton():
 
     def get_events(self):
         print("events")
-        while 1:
-            for event in self.button_device.read_loop():
-                print(str(event))
+        for event in self.button_device.read_loop():
+            print(str(event))
        
            
             
