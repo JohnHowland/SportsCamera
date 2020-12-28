@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #import sys
-#import evdev
+import evdev
 #import socket
 import logging
 
