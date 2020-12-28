@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 #import sys
-import evdev
+#import evdev
 #import socket
+import logging
 
 class shutterButton():
     def __init__(self, trigger_device_name):
-        #self.trigger_device = 'AB Shutter3' trigger_device_name
+        #self.trigger_device = 'Xenvo Shutterbug   Consumer Control' --- Xenvo Shutterbug   Keyboard
         self.trigger_device = trigger_device_name
         print("init")
 
@@ -29,6 +30,9 @@ class shutterButton():
         print("events")
         for event in self.button_device.read_loop():
             print(str(event))
+            b = evdev.categorize(event)
+            if b.event.code == 115 and b.event.value == 1:
+                print("CLICKED!")
        
            
             
@@ -63,6 +67,8 @@ class shutterButton():
 #                    print(evdev.categorize(event))
 
 if __name__ == "__main__":
+    logging.basicConfig(filename='C:\\Users\\JohnC\\Desktop\\logs\\bt_button.log', level=logging.DEBUG)
+    logging.debug("THis is a test...")
     bt = shutterButton("Xenvo Shutterbug   Consumer Control")
     bt.scan_for_devices()
     bt.connect_to_button()

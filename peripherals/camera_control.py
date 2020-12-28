@@ -14,7 +14,8 @@ TIMETOWAITFORABORT = 0.5
 class RaspiVidController(threading.Thread):
     def __init__(self, filePath = "000.264h", timeout = 10000, preview = True, otherOptions=None):
         threading.Thread.__init__(self)
-        
+
+    def setupVideo(self, file, cliptime, preview):
         #setup the raspivid cmd
         self.raspividcmd = RASPIVIDCMD
 
