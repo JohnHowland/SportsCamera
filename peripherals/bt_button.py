@@ -31,6 +31,7 @@ class shutterButton():
         for event in self.button_device.read_loop():
             print(str(event))
             b = evdev.categorize(event)
+            print(str(b))
             if b.event.code == 115 and b.event.value == 1:
                 print("CLICKED!")
        
