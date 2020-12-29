@@ -40,8 +40,8 @@ class shutterButton():
 
                     return ret
 
-        self.tick = 0
-        return "none"
+            self.tick = 0
+            return "none"
 
 
 if __name__ == "__main__":
