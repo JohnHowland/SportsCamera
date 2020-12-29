@@ -32,8 +32,9 @@ class shutterButton():
             print(str(event))
             b = evdev.categorize(event)
             print(str(b))
-            if b.event.code == 115 and b.event.value == 1:
-                print("CLICKED!")
+            if event.value == 1:
+                if event.code == 115:
+                    print("CLICKED!")
        
            
             
