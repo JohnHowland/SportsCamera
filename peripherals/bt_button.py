@@ -28,13 +28,15 @@ class shutterButton():
 
     def get_events(self):
         print("events")
-        for event in self.button_device.read_loop():
-            print(str(event))
-            b = evdev.categorize(event)
-            print(str(b))
-            if event.value == 1:
-                if event.code == 115:
-                    print("CLICKED!")
+        
+        event = self.button_device.read_one()
+        print(str(event))
+        b = evdev.categorize(event)
+        print(str(b))
+        if event.value == 1:
+            if event.code == 115:
+                print("CLICKED!")
+
        
            
             
@@ -75,6 +77,10 @@ if __name__ == "__main__":
     bt.scan_for_devices()
     bt.connect_to_button()
     bt.get_events()
+
+    while True:
+        bt.get_events()
+
     #get_BT_device_list()
 
     #serverMACAddress = '00:1f:e1:dd:08:3d'
