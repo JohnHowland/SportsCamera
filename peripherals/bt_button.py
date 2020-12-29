@@ -2,12 +2,13 @@
 
 import evdev
 import logging
+import time
 
 class shutterButton():
     def __init__(self, trigger_device_name):
         #self.trigger_device = 'Xenvo Shutterbug   Consumer Control' --- Xenvo Shutterbug   Keyboard
         self.trigger_device = trigger_device_name
-        self.tick = 0
+        self.tick = time.time_ns()
         logging.debug("init")
 
     def scan_for_devices(self):
@@ -27,21 +28,21 @@ class shutterButton():
 
     def get_events(self):
         event = self.button_device.read_one()
-
+        ret = "none"
         if event:
             if event.value == 1:
                 if event.code == 115:
                     print("CLICKED!")
-                    self.tick += 1
+                    self.tick = time.time_ns()
                     ret = "single"
 
-                    if self.tick > 50:
-                        ret = "long"
+            else:
+                if event.code == 115:
+                   if (time.time_ns() - self.tick) > 5000000000:
+                       ret = "long"
 
-                    return ret
+        return ret
 
-            self.tick = 0
-            return "none"
 
 
 if __name__ == "__main__":
