@@ -10,6 +10,7 @@ import peripherals.camera_control as cam_ctl
 import peripherals.FileStructure as CamFile
 import peripherals.LED_control as led_control
 import peripherals.phyical_button as button_control
+import peripherals.bt_button as bt_btn
 
 def setupLogging():
     logging.basicConfig(filename='\\home\\pi\\logs\\bt_button.log', level=logging.DEBUG)
@@ -31,9 +32,12 @@ if __name__ == '__main__':
     global folder_name
     vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
     setupLogging()
+    bluetoothButton = bt_btn.shutterButton("Xenvo Shutterbug   Consumer Control")
+    bluetoothButton.scan_for_devices()
+    bluetoothButton.connect_to_button()
 
-    GPIO.setwarnings(False) # Ignore warning for now
-    GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+#    GPIO.setwarnings(False) # Ignore warning for now
+#    GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
     
     camera_file = CamFile.CameraFileSystem()
     folder_name = camera_file.initialSetup()
@@ -51,109 +55,65 @@ if __name__ == '__main__':
     vid_index += 1
 
     #Setting up buttons and LEDs
-    startStopButton = button_control.button(16)
-    clipLengthButton = button_control.button(18)
-    captureButton = button_control.button(22)
-    fiveSecondLED = led_control.LED(7)
-    tenSecondLED = led_control.LED(11)
-    fifteenSecondLED = led_control.LED(13)
-    fiveSecondLED.setLED_off()
-    tenSecondLED.setLED_off()
-    fifteenSecondLED.setLED_off()
+#    startStopButton = button_control.button(16)
+#    clipLengthButton = button_control.button(18)
+#    captureButton = button_control.button(22)
+#    fiveSecondLED = led_control.LED(7)
+#    tenSecondLED = led_control.LED(11)
+#    fifteenSecondLED = led_control.LED(13)
+#    fiveSecondLED.setLED_off()
+#    tenSecondLED.setLED_off()
+#    fifteenSecondLED.setLED_off()
 
-    logging.debug("Start/Stop Button: 16")
-    logging.debug("Clip Length select button: 18")
-    logging.debug("Capture button: 22")
+#    logging.debug("Start/Stop Button: 16")
+#    logging.debug("Clip Length select button: 18")
+#    logging.debug("Capture button: 22")
 
+    logging.debug("Blutooth Button only")
      #Loop to wait for start command
-    exitProgram = False
     clipLength = 10000
-    while exitProgram is False:
-        standbyUntilInput = True
-        i = 0
-        clipLengthArray = [5,10,15]
-        clipLength = 15*1000
 
-        while standbyUntilInput is True:
-            
-            if startStopButton.buttonIn() == 1:
-                useCamera = True
-                standbyUntilInput = False
+    logging.debug("Clip length updated to: " + str(clipLength))
 
-            elif captureButton.buttonIn() == 1:
-                useCamera = False
-                exitProgram = True
-                break
+    useCamera = True     
+    
+    if useCamera is True:
+        vidcontrol.setupVideo(fileName, clipLength, False)
 
-            elif clipLengthButton.buttonIn() == 1:
-                clipLength = clipLengthArray[i] * 1000
-
-                if i == 0:
-                    fiveSecondLED.setLED_on()
-                    tenSecondLED.setLED_off()
-                    fifteenSecondLED.setLED_off()
-                elif i == 1:
-                    fiveSecondLED.setLED_off()
-                    tenSecondLED.setLED_on()
-                    fifteenSecondLED.setLED_off()
-                elif i == 2:
-                    fiveSecondLED.setLED_off()
-                    tenSecondLED.setLED_off()
-                    fifteenSecondLED.setLED_on()
-
-                i += 1
-                logging.debug("Clip length updated to: " + str(clipLength))
-
-                if i > 2:
-                    i = 0
-            
-        if useCamera is True:
-            vidcontrol.setupVideo(fileName, clipLength, False)
-
-            logging.debug("Starting raspivid controller")
-            vidcontrol.start()
+        logging.debug("Starting raspivid controller")
+        vidcontrol.start()
         
-        while useCamera is True:
-            
-            if clipLengthButton.buttonIn() == 1:
-                exitProgram = True
-                break
-
-            elif startStopButton.buttonIn() == 1:
-                useCamera = False
-                pass
-
-            elif captureButton.buttonIn() == 1:
-                list_line_out = "%d.h264" % vid_index
-                list_fp.write("file "+list_line_out+"\n")
-                fileName = folder_name + "/%d.h264" % vid_index
-                vid_index += 1
-                vidcontrol.killCameraProcess()
-          
-                vidcontrol.setupVideo(fileName, clipLength, False)
-                vidcontrol.start()
-          
-        if exitProgram is False:
-            file_to_delete = vidcontrol.getCurrentFilepath()
-            logging.debug("Stopping raspivid controller")
+    while useCamera is True:
+        if bluetoothButton.get_events == True:
+            list_line_out = "%d.h264" % vid_index
+            list_fp.write("file "+list_line_out+"\n")
+            fileName = folder_name + "/%d.h264" % vid_index
+            vid_index += 1
             vidcontrol.killCameraProcess()
-            #os.remove(file_to_delete)
+          
+            vidcontrol.setupVideo(fileName, clipLength, False)
+            vidcontrol.start()
+          
+    if exitProgram is False:
+        file_to_delete = vidcontrol.getCurrentFilepath()
+        logging.debug("Stopping raspivid controller")
+        vidcontrol.killCameraProcess()
 
-            list_fp.close()
-            logging.debug("Done")
+        list_fp.close()
+        logging.debug("Done")
 
-            logging.debug("Creating single file")
+        logging.debug("Creating single file")
 
-            mp4_out_filepath = '"'+folder_name+'/out.mp4"'
+        mp4_out_filepath = '"'+folder_name+'/out.mp4"'
     
-            os.chdir(folder_name)
-            ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
-            logging.debug(ffmpeg_out)
+        os.chdir(folder_name)
+        ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
+        logging.debug(ffmpeg_out)
     
-            sub = subprocess.Popen(ffmpeg_out, shell=True)
+        sub = subprocess.Popen(ffmpeg_out, shell=True)
 
-            sub.wait() 
-            logging.debug(ffmpeg_out)
+        sub.wait() 
+        logging.debug(ffmpeg_out)
 
     logging.debug("Now you are done!")
 

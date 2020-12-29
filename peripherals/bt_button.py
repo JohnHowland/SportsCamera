@@ -7,7 +7,8 @@ class shutterButton():
     def __init__(self, trigger_device_name):
         #self.trigger_device = 'Xenvo Shutterbug   Consumer Control' --- Xenvo Shutterbug   Keyboard
         self.trigger_device = trigger_device_name
-        print("init")
+        self.tick = 0
+        logging.debug("init")
 
     def scan_for_devices(self):
         print("scan")
@@ -31,7 +32,16 @@ class shutterButton():
             if event.value == 1:
                 if event.code == 115:
                     print("CLICKED!")
-                    return True
+                    self.tick += 1
+                    ret = "single"
+
+                    if self.tick > 50:
+                        ret = "long"
+
+                    return ret
+
+        self.tick = 0
+        return "none"
 
 
 if __name__ == "__main__":
@@ -40,7 +50,7 @@ if __name__ == "__main__":
     bt = shutterButton("Xenvo Shutterbug   Consumer Control")
     bt.scan_for_devices()
     bt.connect_to_button()
-    bt.get_events()
+#    bt.get_events()
 
     while True:
         bt.get_events()
