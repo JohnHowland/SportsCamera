@@ -84,7 +84,9 @@ if __name__ == '__main__':
         vidcontrol.start()
         
     while useCamera is True:
-        if bluetoothButton.get_events == True:
+        button_input = bluetoothButton.get_events()
+
+        if button_input == "single":
             list_line_out = "%d.h264" % vid_index
             list_fp.write("file "+list_line_out+"\n")
             fileName = folder_name + "/%d.h264" % vid_index
@@ -93,6 +95,8 @@ if __name__ == '__main__':
           
             vidcontrol.setupVideo(fileName, clipLength, False)
             vidcontrol.start()
+        elif button_input == "long":
+            exitProgram = True
           
     if exitProgram is False:
         file_to_delete = vidcontrol.getCurrentFilepath()

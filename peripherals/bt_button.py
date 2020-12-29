@@ -34,13 +34,14 @@ class shutterButton():
                 if event.code == 115:
                     print("CLICKED!")
                     self.tick = time.time_ns()
-                    ret = "single"
 
             else:
                 if event.code == 115:
-                    print("CLICKED!")
+                    print("UNCLICKED!")
                     if (time.time_ns() - self.tick) > 5000000000:
                         ret = "long"
+                    else:
+                        ret = "single"
 
         return ret
 
