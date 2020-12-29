@@ -53,4 +53,4 @@ if __name__ == "__main__":
 #    bt.get_events()
 
     while True:
-        bt.get_events()
+        print(bt.get_events())
