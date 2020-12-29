@@ -27,8 +27,7 @@ class shutterButton():
                 return
 
     def get_events(self):
-        print("events")
-        
+       
         event = self.button_device.read_one()
 #        print(str(event))
 #        b = evdev.categorize(event)
