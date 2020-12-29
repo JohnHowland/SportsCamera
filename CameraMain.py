@@ -4,40 +4,43 @@ import subprocess
 import threading
 import string
 import RPi.GPIO as GPIO
+import logging
 
 import peripherals.camera_control as cam_ctl
 import peripherals.FileStructure as CamFile
 import peripherals.LED_control as led_control
 import peripherals.phyical_button as button_control
 
+def setupLogging():
+    logging.basicConfig(filename='\\home\\pi\\logs\\bt_button.log', level=logging.DEBUG)
+    logging.debug("Setting up logging abilities.")
 
+#def init_vid(file, cliptime, preview):
+#    global vidcontrol
+#    vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
 
-def init_vid(file, cliptime, preview):
-    global vidcontrol
-    vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
-
-def start_vid():
-    global vidcontrol
-    vidcontrol.start()
+#def start_vid():
+#    global vidcontrol
+#    vidcontrol.start()
 
 #test program
 
 if __name__ == '__main__':
-    
     global button_event
-    global vidcontrol
+#    global vidcontrol
     global folder_name
+    vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
+    setupLogging()
 
     GPIO.setwarnings(False) # Ignore warning for now
     GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
     
     camera_file = CamFile.CameraFileSystem()
-
     folder_name = camera_file.initialSetup()
     
-    print("folder name: %s" % folder_name)
+    logging.debug("folder name: %s" % folder_name)
     list_file_path = folder_name+"/list.txt"
-    print("list_file_path: %s" % list_file_path)
+    logging.debug("list_file_path: %s" % list_file_path)
     list_fp = open(list_file_path, "w")
 
     vid_index = 0
@@ -47,31 +50,30 @@ if __name__ == '__main__':
     fileName = folder_name + "/%d.h264" % vid_index
     vid_index += 1
 
-    #Loop to wait for start command
-    exitProgram = False
-    clipLength = 10000
-
+    #Setting up buttons and LEDs
     startStopButton = button_control.button(16)
     clipLengthButton = button_control.button(18)
     captureButton = button_control.button(22)
-
     fiveSecondLED = led_control.LED(7)
     tenSecondLED = led_control.LED(11)
     fifteenSecondLED = led_control.LED(13)
-
     fiveSecondLED.setLED_off()
     tenSecondLED.setLED_off()
     fifteenSecondLED.setLED_off()
 
-    print("Start/Stop Button: 16")
-    print("Clip Length select button: 18")
-    print("Capture button: 22")
+    logging.debug("Start/Stop Button: 16")
+    logging.debug("Clip Length select button: 18")
+    logging.debug("Capture button: 22")
 
+     #Loop to wait for start command
+    exitProgram = False
+    clipLength = 10000
     while exitProgram is False:
         standbyUntilInput = True
         i = 0
         clipLengthArray = [5,10,15]
         clipLength = 15*1000
+
         while standbyUntilInput is True:
             
             if startStopButton.buttonIn() == 1:
@@ -100,16 +102,16 @@ if __name__ == '__main__':
                     fifteenSecondLED.setLED_on()
 
                 i += 1
-                print("Clip length updated to: " + str(clipLength))
+                logging.debug("Clip length updated to: " + str(clipLength))
 
                 if i > 2:
                     i = 0
             
         if useCamera is True:
-            init_vid(fileName, clipLength, False)
+            vidcontrol.setupVideo(fileName, clipLength, False)
 
-            print("Starting raspivid controller")
-            start_vid()
+            logging.debug("Starting raspivid controller")
+            vidcontrol.start()
         
         while useCamera is True:
             
@@ -128,32 +130,32 @@ if __name__ == '__main__':
                 vid_index += 1
                 vidcontrol.killCameraProcess()
           
-                init_vid(fileName, clipLength, False)
-                start_vid()
+                vidcontrol.setupVideo(fileName, clipLength, False)
+                vidcontrol.start()
           
         if exitProgram is False:
             file_to_delete = vidcontrol.getCurrentFilepath()
-            print("Stopping raspivid controller")
+            logging.debug("Stopping raspivid controller")
             vidcontrol.killCameraProcess()
             #os.remove(file_to_delete)
 
             list_fp.close()
-            print("Done")
+            logging.debug("Done")
 
-            print("Creating single file")
+            logging.debug("Creating single file")
 
             mp4_out_filepath = '"'+folder_name+'/out.mp4"'
     
             os.chdir(folder_name)
             ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
-            print(ffmpeg_out)
+            logging.debug(ffmpeg_out)
     
             sub = subprocess.Popen(ffmpeg_out, shell=True)
 
             sub.wait() 
-            print(ffmpeg_out)
+            logging.debug(ffmpeg_out)
 
-    print("Now you are done!")
+    logging.debug("Now you are done!")
 
     fiveSecondLED.setLED_off()
     tenSecondLED.setLED_off()
