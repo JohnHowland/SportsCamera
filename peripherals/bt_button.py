@@ -31,8 +31,8 @@ class shutterButton():
         
         event = self.button_device.read_one()
         print(str(event))
-        b = evdev.categorize(event)
-        print(str(b))
+#        b = evdev.categorize(event)
+#        print(str(b))
         if event:
             if event.value == 1:
                 if event.code == 115:
