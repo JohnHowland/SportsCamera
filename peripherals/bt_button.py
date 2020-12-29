@@ -38,8 +38,9 @@ class shutterButton():
 
             else:
                 if event.code == 115:
-                   if (time.time_ns() - self.tick) > 5000000000:
-                       ret = "long"
+                    print("CLICKED!")
+                    if (time.time_ns() - self.tick) > 5000000000:
+                        ret = "long"
 
         return ret
 
@@ -55,3 +56,4 @@ if __name__ == "__main__":
 
     while True:
         print(bt.get_events())
+        time.sleep(0.5)
