@@ -97,6 +97,7 @@ if __name__ == '__main__':
             vidcontrol.start()
         elif button_input == "long":
             exitProgram = True
+            break
           
     if exitProgram is False:
         file_to_delete = vidcontrol.getCurrentFilepath()
