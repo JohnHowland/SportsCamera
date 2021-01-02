@@ -13,18 +13,13 @@ import peripherals.phyical_button as button_control
 import peripherals.bt_button as bt_btn
 
 def setupLogging():
-    logging.basicConfig(filename='\home\pi\logs\bt_button.log', level=logging.DEBUG)
-    logging.debug("Setting up logging abilities.")
-
-#def init_vid(file, cliptime, preview):
-#    global vidcontrol
-#    vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
-
-#def start_vid():
-#    global vidcontrol
-#    vidcontrol.start()
-
-#test program
+    LOG_LEVEL = logging.INFO
+    #LOG_LEVEL = logging.DEBUG
+    LOG_FILE = "/home/pi/logs/bt_button.log"
+    #LOG_FILE = "/dev/stdout"
+    LOG_FORMAT = "%(asctime)s %(levelname)s %(message)s"
+    logging.basicConfig(filename=LOG_FILE, format=LOG_FORMAT, level=LOG_LEVEL)
+    logging.info("Setting up logging")
 
 if __name__ == '__main__':
     global button_event
@@ -35,10 +30,7 @@ if __name__ == '__main__':
     bluetoothButton = bt_btn.shutterButton("Xenvo Shutterbug   Consumer Control")
     bluetoothButton.scan_for_devices()
     bluetoothButton.connect_to_button()
-
-#    GPIO.setwarnings(False) # Ignore warning for now
-#    GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
-    
+  
     camera_file = CamFile.CameraFileSystem()
     folder_name = camera_file.initialSetup()
     
@@ -54,28 +46,14 @@ if __name__ == '__main__':
     fileName = folder_name + "/%d.h264" % vid_index
     vid_index += 1
 
-    #Setting up buttons and LEDs
-#    startStopButton = button_control.button(16)
-#    clipLengthButton = button_control.button(18)
-#    captureButton = button_control.button(22)
-#    fiveSecondLED = led_control.LED(7)
-#    tenSecondLED = led_control.LED(11)
-#    fifteenSecondLED = led_control.LED(13)
-#    fiveSecondLED.setLED_off()
-#    tenSecondLED.setLED_off()
-#    fifteenSecondLED.setLED_off()
-
-#    logging.debug("Start/Stop Button: 16")
-#    logging.debug("Clip Length select button: 18")
-#    logging.debug("Capture button: 22")
-
     logging.debug("Blutooth Button only")
      #Loop to wait for start command
     clipLength = 10000
 
     logging.debug("Clip length updated to: " + str(clipLength))
 
-    useCamera = True     
+    useCamera = True 
+    compressFootage = False
     
     if useCamera is True:
         vidcontrol.setupVideo(fileName, clipLength, False)
@@ -96,31 +74,44 @@ if __name__ == '__main__':
             vidcontrol.setupVideo(fileName, clipLength, False)
             vidcontrol.start()
         elif button_input == "long":
+            compressFootage = True
             break
           
-    if exitProgram is False:
-        file_to_delete = vidcontrol.getCurrentFilepath()
-        logging.debug("Stopping raspivid controller")
-        vidcontrol.killCameraProcess()
+        if compressFootage is True:
+            file_to_delete = vidcontrol.getCurrentFilepath()
+            logging.debug("Stopping raspivid controller")
+            vidcontrol.killCameraProcess()
 
-        list_fp.close()
-        logging.debug("Done")
+            list_fp.close()
+            logging.debug("Done")
 
-        logging.debug("Creating single file")
+            logging.debug("Creating single file")
 
-        mp4_out_filepath = '"'+folder_name+'/out.mp4"'
+            mp4_out_filepath = '"'+folder_name+'/out.mp4"'
     
-        os.chdir(folder_name)
-        ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
-        logging.debug(ffmpeg_out)
+            os.chdir(folder_name)
+            ffmpeg_out = 'ffmpeg -f concat -i list.txt -c copy out.mp4'
+            logging.debug(ffmpeg_out)
     
-        sub = subprocess.Popen(ffmpeg_out, shell=True)
+            sub = subprocess.Popen(ffmpeg_out, shell=True)
 
-        sub.wait() 
-        logging.debug(ffmpeg_out)
+            sub.wait() 
+            logging.debug(ffmpeg_out)
+
+
+            camera_file = CamFile.CameraFileSystem()
+            folder_name = camera_file.initialSetup()
+            logging.debug("folder name: %s" % folder_name)
+            list_file_path = folder_name+"/list.txt"
+            logging.debug("list_file_path: %s" % list_file_path)
+            list_fp = open(list_file_path, "w")
+
+            vid_index = 0
+    
+            list_line_out = "%d.h264" % vid_index
+            list_fp.write("file "+list_line_out+"\n")
+            fileName = folder_name + "/%d.h264" % vid_index
+            vid_index += 1
+            compressFootage = False
 
     logging.debug("Now you are done!")
-
-#    fiveSecondLED.setLED_off()
-#    tenSecondLED.setLED_off()
-#    fifteenSecondLED.setLED_off()
