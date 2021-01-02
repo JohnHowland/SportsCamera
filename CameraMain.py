@@ -13,7 +13,7 @@ import peripherals.phyical_button as button_control
 import peripherals.bt_button as bt_btn
 
 def setupLogging():
-    logging.basicConfig(filename='\\home\\pi\\logs\\bt_button.log', level=logging.DEBUG)
+    logging.basicConfig(filename='\home\pi\logs\bt_button.log', level=logging.DEBUG)
     logging.debug("Setting up logging abilities.")
 
 #def init_vid(file, cliptime, preview):
