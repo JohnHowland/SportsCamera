@@ -30,7 +30,7 @@ if __name__ == '__main__':
     global button_event
 #    global vidcontrol
     global folder_name
-    vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
+#    vidcontrol = cam_ctl.RaspiVidController(file, cliptime, preview, "-fps 25 ")
     setupLogging()
     bluetoothButton = bt_btn.shutterButton("Xenvo Shutterbug   Consumer Control")
     bluetoothButton.scan_for_devices()
