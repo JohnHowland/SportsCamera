@@ -96,7 +96,6 @@ if __name__ == '__main__':
             vidcontrol.setupVideo(fileName, clipLength, False)
             vidcontrol.start()
         elif button_input == "long":
-            exitProgram = True
             break
           
     if exitProgram is False:
@@ -122,6 +121,6 @@ if __name__ == '__main__':
 
     logging.debug("Now you are done!")
 
-    fiveSecondLED.setLED_off()
-    tenSecondLED.setLED_off()
-    fifteenSecondLED.setLED_off()
+#    fiveSecondLED.setLED_off()
+#    tenSecondLED.setLED_off()
+#    fifteenSecondLED.setLED_off()
