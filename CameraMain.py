@@ -16,8 +16,8 @@ def setupLogging():
     pass
 
 if __name__ == '__main__':
-    LOG_LEVEL = logging.INFO
-    #LOG_LEVEL = logging.DEBUG
+    #LOG_LEVEL = logging.INFO
+    LOG_LEVEL = logging.DEBUG
     LOG_FILE = "/home/pi/logs/bt_button.log"
     #LOG_FILE = "/dev/stdout"
     LOG_FORMAT = "%(asctime)s %(levelname)s %(message)s"
@@ -113,6 +113,11 @@ if __name__ == '__main__':
             list_fp.write("file "+list_line_out+"\n")
             fileName = folder_name + "/%d.h264" % vid_index
             vid_index += 1
+
+            vidcontrol.setupVideo(fileName, clipLength, False)
+
+            logging.debug("Starting raspivid controller")
+            vidcontrol.start()
             compressFootage = False
 
     logging.debug("Now you are done!")
