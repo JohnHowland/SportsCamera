@@ -12,10 +12,11 @@ TIMETOWAITFORABORT = 0.5
 
 #class for controlling the running and shutting down of raspivid
 class RaspiVidController(threading.Thread):
-    def __init__(self, filePath = "000.264h", timeout = 10000, preview = True, otherOptions=None):
-        threading.Thread.__init__(self)
+    def __init__(self):
+        pass
 
-    def setupVideo(self, file, cliptime, preview):
+    def setupVideo(self,  filePath = "000.264h", timeout = 10000, preview = True, otherOptions=None):
+        threading.Thread.__init__(self)
         #setup the raspivid cmd
         self.raspividcmd = RASPIVIDCMD
 
