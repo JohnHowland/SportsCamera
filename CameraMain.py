@@ -13,6 +13,9 @@ import peripherals.phyical_button as button_control
 import peripherals.bt_button as bt_btn
 
 def setupLogging():
+    pass
+
+if __name__ == '__main__':
     LOG_LEVEL = logging.INFO
     #LOG_LEVEL = logging.DEBUG
     LOG_FILE = "/home/pi/logs/bt_button.log"
@@ -21,7 +24,6 @@ def setupLogging():
     logging.basicConfig(filename=LOG_FILE, format=LOG_FORMAT, level=LOG_LEVEL)
     logging.info("Setting up logging")
 
-if __name__ == '__main__':
     global button_event
 #    global vidcontrol
     global folder_name
@@ -75,7 +77,6 @@ if __name__ == '__main__':
             vidcontrol.start()
         elif button_input == "long":
             compressFootage = True
-            break
           
         if compressFootage is True:
             file_to_delete = vidcontrol.getCurrentFilepath()
