@@ -24,7 +24,8 @@ class shutterButton():
                 print("matched")
                 self.button_device = device
                 self.button_device.grab() # other apps unable to receive events until device released     
-                return
+                return True
+        return False
 
     def get_events(self):
         event = self.button_device.read_one()

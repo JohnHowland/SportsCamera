@@ -29,9 +29,14 @@ if __name__ == '__main__':
     global folder_name
     vidcontrol = cam_ctl.RaspiVidController()
     setupLogging()
-    bluetoothButton = bt_btn.shutterButton("Xenvo Shutterbug   Consumer Control")
-    bluetoothButton.scan_for_devices()
-    bluetoothButton.connect_to_button()
+
+    connecting = False
+    while connecting is False:
+        bluetoothButton = bt_btn.shutterButton("Xenvo Shutterbug   Consumer Control")
+        bluetoothButton.scan_for_devices()
+        connecting = bluetoothButton.connect_to_button()
+
+    #TODO: Need to add error checking around when button is there to connect
   
     camera_file = CamFile.CameraFileSystem()
     folder_name = camera_file.initialSetup()
