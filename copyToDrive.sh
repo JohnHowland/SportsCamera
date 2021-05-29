@@ -23,6 +23,6 @@ new_filepath="$folder/$newfile"
 google_drive_path="sportsCam:SportsCamVideos/$newfile"
 
 
-rclone copy $new_filepath $google_drive_path
+echo "rclone copy $new_filepath $google_drive_path"
 
 #read temp
