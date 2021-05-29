@@ -5,6 +5,8 @@ import threading
 import string
 import RPi.GPIO as GPIO
 import logging
+import time
+import datetime
 
 import peripherals.camera_control as cam_ctl
 import peripherals.FileStructure as CamFile
@@ -13,6 +15,12 @@ import peripherals.phyical_button as button_control
 import peripherals.bt_button as bt_btn
 
 def setupLogging():
+    pass
+
+def rename_and_copy_file(selectedFolder, selectedFile):
+    new_file_name = str(datetime.datetime.now())
+
+    rc = subprocess.call(["copyToDrive.sh", selectedFolder, selectedFile, "nothing", new_file_name], shell=True)
     pass
 
 if __name__ == '__main__':
@@ -124,5 +132,10 @@ if __name__ == '__main__':
             logging.debug("Starting raspivid controller")
             vidcontrol.start()
             compressFootage = False
+
+            #copy file to the google drive here
+            #need to check to internet connection
+            rename_and_copy_file(folder_name, "out.mp4")
+
 
     logging.debug("Now you are done!")
