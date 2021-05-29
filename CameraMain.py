@@ -20,7 +20,7 @@ def setupLogging():
 def rename_and_copy_file(selectedFolder, selectedFile):
     new_file_name = str(datetime.datetime.now())
 
-    rc = subprocess.call(["copyToDrive.sh", selectedFolder, selectedFile, "nothing", new_file_name], shell=True)
+    rc = subprocess.call(["/home/pi/dev/SportsCamera/copyToDrive.sh", selectedFolder, selectedFile, "nothing", new_file_name], shell=True)
     pass
 
 if __name__ == '__main__':
