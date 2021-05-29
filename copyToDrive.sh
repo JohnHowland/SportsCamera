@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "YES YES YES"
-
 folder=$1
 file_to_copy=$2
 destination=$3
