@@ -10,7 +10,7 @@ echo "file to copy: $file_to_copy"
 echo "destination: $destination"
 
 fullpath_before="$folder/$file_to_copy"
-echo "destination_before: $fullpath"
+echo "destination_before: $fullpath_before"
 
 
 
@@ -23,4 +23,4 @@ google_drive_path="sportsCam:SportsCamVideos/$newfile"
 
 echo "rclone copy $new_filepath $google_drive_path"
 
-#read temp
+read temp
