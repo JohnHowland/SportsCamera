@@ -15,12 +15,12 @@ echo "destination_before: $fullpath_before"
 
 
 
-cd $folder
-cp $file_to_copy $newfile
+cd \"$folder\"
+cp \"$file_to_copy\" \"$newfile\"
 
 new_filepath="$folder/$newfile"
 google_drive_path="sportsCam:SportsCamVideos/$newfile"
 
 
-echo "rclone copy $new_filepath $google_drive_path"
+echo "rclone copy \"$new_filepath\" \"$google_drive_path\""
 read temp
