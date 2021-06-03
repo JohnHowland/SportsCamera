@@ -14,8 +14,10 @@ fullpath_before="$folder/$file_to_copy"
 echo "destination_before: $fullpath_before"
 
 
-
+echo "cding to here: \"$folder\""
 cd \"$folder\"
+
+echo "cping this: \"$file_to_copy\" \"$newfile\""
 cp \"$file_to_copy\" \"$newfile\"
 
 new_filepath="$folder/$newfile"
