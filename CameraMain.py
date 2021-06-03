@@ -19,7 +19,7 @@ def setupLogging():
 
 def rename_and_copy_file(selectedFolder, selectedFile):
     new_file_name = str(datetime.datetime.now())+".mp4"
-    new_file_name = new_file_name.replace("_", " ")
+    new_file_name = new_file_name.replace(" ", "_")
 
     print(f"selectedFolder: {selectedFolder}, selectedFile: {selectedFile}, new_file_name: {new_file_name}")
     rc = subprocess.Popen(['/home/pi/dev/SportsCamera/copyToDrive.sh', selectedFolder, selectedFile, "nothing", new_file_name])   #, stdout=subprocess.PIPE
