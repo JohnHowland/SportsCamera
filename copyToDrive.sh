@@ -15,10 +15,10 @@ echo "destination_before: $fullpath_before"
 
 
 echo "cding to here: \"$folder\""
-#cd \"$folder\"
+cd \"$folder\"
 
 echo "cping this: \"$file_to_copy\" \"$newfile\""
-#cp $file_to_copy $newfile
+mv $file_to_copy $newfile
 
 new_filepath="$folder/$newfile"
 google_drive_path="sportsCam:SportsCamVideos/$newfile"
