@@ -18,7 +18,7 @@ echo "cding to here: \"$folder\""
 cd \"$folder\"
 
 echo "cping this: \"$file_to_copy\" \"$newfile\""
-cp \"$file_to_copy\" \"$newfile\"
+cp $file_to_copy \"$newfile\"
 
 new_filepath="$folder/$newfile"
 google_drive_path="sportsCam:SportsCamVideos/$newfile"
