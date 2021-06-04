@@ -15,14 +15,18 @@ echo "destination_before: $fullpath_before"
 
 
 echo "cding to here: \"$folder\""
-cd \"$folder\"
+#cd \"$folder\"
 
 echo "cping this: \"$file_to_copy\" \"$newfile\""
-cp $file_to_copy \"$newfile\"
+#cp $file_to_copy $newfile
 
 new_filepath="$folder/$newfile"
 google_drive_path="sportsCam:SportsCamVideos/$newfile"
 
+new_filepath_wq="'$new_filepath'"
 
-rclone copy $new_filepath $google_drive_path
+echo "new_filepath: $new_filepath_wq   google_drive_path: $google_drive_path"
+
+rclone copy new_filepath_wq $google_drive_path
+
 #read temp
