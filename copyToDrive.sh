@@ -27,6 +27,6 @@ new_filepath_wq="'$new_filepath'"
 
 echo "new_filepath: $new_filepath_wq   google_drive_path: $google_drive_path"
 
-rclone copy new_filepath_wq $google_drive_path
+rclone copy $new_filepath_wq $google_drive_path
 
 #read temp
