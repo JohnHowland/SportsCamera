@@ -23,6 +23,7 @@ def rename_and_copy_file(selectedFolder, selectedFile):
 
     print(f"selectedFolder: {selectedFolder}, selectedFile: {selectedFile}, new_file_name: {new_file_name}")
     rc = subprocess.Popen(['/home/pi/dev/SportsCamera/copyToDrive.sh', selectedFolder, selectedFile, "nothing", new_file_name])   #, stdout=subprocess.PIPE
+    rc.wait()
     pass
 
 if __name__ == '__main__':
@@ -114,6 +115,10 @@ if __name__ == '__main__':
             sub.wait() 
             logging.debug(ffmpeg_out)
 
+             #copy file to the google drive here
+            #need to check to internet connection
+            rename_and_copy_file(folder_name, "out.mp4")
+
 
             camera_file = CamFile.CameraFileSystem()
             folder_name = camera_file.initialSetup()
@@ -135,9 +140,6 @@ if __name__ == '__main__':
             vidcontrol.start()
             compressFootage = False
 
-            #copy file to the google drive here
-            #need to check to internet connection
-            rename_and_copy_file(folder_name, "out.mp4")
 
 
     logging.debug("Now you are done!")
