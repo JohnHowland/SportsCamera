@@ -24,7 +24,7 @@ for folder in "${folderArray[@]}"; do
         echo "File found: $fileToCopy"
         
         new_filepath=$fileToCopy
-        google_drive_path="sportsCam:SportsCamVideos/$newfile"
+        google_drive_path="sportsCam:SportsCamVideos/$new_filepath"
 
         echo "rclone copy $new_filepath $google_drive_path"
 
