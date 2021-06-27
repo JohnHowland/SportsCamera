@@ -29,6 +29,7 @@ for folder in "${folderArray[@]}"; do
         echo "rclone copy $new_filepath $google_drive_path"
 
         #rclone copy $new_filepath $google_drive_path
+    fi
 
 done
 
