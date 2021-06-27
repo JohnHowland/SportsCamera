@@ -22,9 +22,9 @@ for folder in "${folderArray[@]}"; do
     
     if [ -n "$fileToCopy" ]; then
         echo "File found: $fileToCopy"
-
-        google_drive_path="sportsCam:SportsCamVideos/$newfile"
+        
         new_filepath=$fileToCopy
+        google_drive_path="sportsCam:SportsCamVideos/$newfile"
 
         echo "rclone copy $new_filepath $google_drive_path"
 
