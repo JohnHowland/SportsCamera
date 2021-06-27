@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
              #copy file to the google drive here
             #need to check to internet connection
-            rename_and_copy_file(folder_name, "out.mp4")
+            #rename_and_copy_file(folder_name, "out.mp4")
 
 
             camera_file = CamFile.CameraFileSystem()
