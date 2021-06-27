@@ -27,14 +27,15 @@ for folder in "${folderArray[@]}"; do
         
         new_file=( $( ls *.mp4 ) )
 
-        cd ../
-        
         new_filepath=$fileToCopy
         google_drive_path="sportsCam:SportsCamVideos/$new_file"
 
-        echo "rclone copy $new_filepath $google_drive_path"
+        pwd
+        echo "rclone copy $new_fileh $google_drive_path"
 
-        rclone copy $new_filepath $google_drive_path
+        rclone copy $new_file $google_drive_path
+
+        cd ../
     fi
 
 done
